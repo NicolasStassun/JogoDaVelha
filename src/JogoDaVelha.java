@@ -69,6 +69,16 @@ public class JogoDaVelha {
 
         int escolha=0;
 
+        for(int i=0;i<3;i++) {
+
+            for (int j = 0; j < 3; j++) {
+
+                jogo[i][j] = 0;
+
+            }
+
+        }
+
         System.out.println("Jogo da Velha");
         System.out.println("-------------");
         System.out.println("1 - Jogar");
@@ -91,9 +101,11 @@ public class JogoDaVelha {
     public static void JogoDaVelha(){
 
         int x,y;
+        int NumJogadas = 0;
         boolean ganhador = false;
             do {
                 if (ganhador == false) {
+                    NumJogadas++;
                     System.out.println("Jogador " + NomeJogador1 + " escolha sua jogada");
                     System.out.println("Coluna: ");
                     x = sc.nextInt();
@@ -106,11 +118,16 @@ public class JogoDaVelha {
 
                     } else {
                         System.out.println("Jogada Inválida");
+                        menu();
+                    }
+                    if (NumJogadas==9){
+                        System.out.println("Empate");
                     }
                 }
                 escreveJogo();
                 ganhador = verificacao(ganhador);
                 if (ganhador == false) {
+                    NumJogadas++;
                     System.out.println("Jogador " + NomeJogador2 + " escolha sua jogada");
                     System.out.println("Coluna: ");
                     x = sc.nextInt();
@@ -123,20 +140,16 @@ public class JogoDaVelha {
 
                     } else {
                         System.out.println("Jogada Inválida");
+                        menu();
+                    }
+                    if (NumJogadas==9){
+                        System.out.println("Empate");
                     }
                 }
             escreveJogo();
             ganhador = verificacao(ganhador);
-        }while(ganhador != true);
-        for(int i=0;i<3;i++) {
+        }while(ganhador != true || NumJogadas!=9);
 
-            for (int j = 0; j < 3; j++) {
-
-                jogo[i][j] = 0;
-
-            }
-
-        }
             menu();
 
 
