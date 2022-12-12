@@ -120,12 +120,16 @@ public class JogoDaVelha {
                         System.out.println("Jogada Inválida");
                         menu();
                     }
+
+                    escreveJogo();
+                    ganhador = verificacao(ganhador);
+
                     if (NumJogadas==9){
                         System.out.println("Empate");
+                        ganhador = true;
                     }
                 }
-                escreveJogo();
-                ganhador = verificacao(ganhador);
+
                 if (ganhador == false) {
                     NumJogadas++;
                     System.out.println("Jogador " + NomeJogador2 + " escolha sua jogada");
@@ -142,13 +146,17 @@ public class JogoDaVelha {
                         System.out.println("Jogada Inválida");
                         menu();
                     }
+
+                    escreveJogo();
+                    ganhador = verificacao(ganhador);
+
                     if (NumJogadas==9){
                         System.out.println("Empate");
+                        ganhador = true;
                     }
                 }
-            escreveJogo();
-            ganhador = verificacao(ganhador);
-        }while(ganhador != true || NumJogadas!=9);
+
+        }while(ganhador != true);
 
             menu();
 
