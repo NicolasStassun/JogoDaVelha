@@ -1,10 +1,11 @@
 import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class JogoDaVelha {
 
     static Scanner sc = new Scanner(System.in);
 
-    static int jogo[][] = new int[3][3];
+    static char jogo[][] = new char[3][3];
     static int VitoriasJogador1 = 0, VitoriasJogador2 = 0;
     static String NomeJogador1, NomeJogador2;
 
@@ -14,7 +15,7 @@ public class JogoDaVelha {
 
             for (int j = 0; j < 3; j++) {
 
-                jogo[i][j] = 0;
+                jogo[i][j] = ' ';
 
             }
 
@@ -57,12 +58,9 @@ public class JogoDaVelha {
 
     public static void NomeJogadores(){
 
-        System.out.println("Informe o nome do Jogador X: ");
-        NomeJogador1 = sc.next();
-        sc.nextLine();
-        System.out.println("Informe o nome do Jogador O: ");
-        NomeJogador2 = sc.next();
-        sc.nextLine();
+       NomeJogador1 = JOptionPane.showInputDialog("Informe o nome do Jogador X: ");
+       NomeJogador2 = JOptionPane.showInputDialog("Informe o nome do Jogador O: ");
+
 
     }
     public static int menu(){
@@ -73,264 +71,229 @@ public class JogoDaVelha {
 
             for (int j = 0; j < 3; j++) {
 
-                jogo[i][j] = 0;
+                jogo[i][j] = ' ';
 
             }
 
         }
 
-        System.out.println("Jogo da Velha");
-        System.out.println("-------------");
-        System.out.println("1 - Jogar");
-        System.out.println("2 - Ver placar");
-        System.out.println("3 - Trocar Nomes");
-        System.out.println("0 - Sair");
 
-        escolha = sc.nextInt();
+
+        escolha = Integer.parseInt(JOptionPane.showInputDialog("Jogo da Velha \n" +
+                "--------------\n" +
+                "1 - Jogar \n" +
+                "2 - Mostra Placar \n" +
+                "3 - Troca de Nome \n" +
+                "0 - Sair."));
+
 
         return escolha;
     }
     public static void mostraPlacar(){
-        System.out.println("----------------====Placar====----------------");
-        System.out.println("1° "+NomeJogador1+" ganhou "+VitoriasJogador1);
-        System.out.println("2° "+NomeJogador2+" ganhou "+VitoriasJogador2);
-        System.out.println("----------------==============----------------");
+        JOptionPane.showMessageDialog(null,"----------------====Placar====---------------- \n "+
+                "1° "+NomeJogador1+" ganhou "+VitoriasJogador1+"\n"+
+                "2° "+NomeJogador2+" ganhou "+VitoriasJogador2+"\n"+
+                "----------------==============----------------\n");
     }
 
 
     public static void JogoDaVelha(){
 
-        int x,y;
-        int NumJogadas = 0;
+        int x = 0;
+        int y =0;
+        boolean teste1 = true;
+        boolean teste2 = true;
         boolean ganhador = false;
-            do {
-                if (ganhador == false) {
-                    NumJogadas++;
-                    System.out.println("Jogador " + NomeJogador1 + " escolha sua jogada");
-                    System.out.println("Coluna: ");
-                    x = sc.nextInt();
-                    System.out.println("Linha: ");
-                    y = sc.nextInt();
+        int Jogadas = 0;
+        int jogador = 0;
+        while(Jogadas!=9 || ganhador == false){
 
-                    if (jogo[y][x] == 0) {
+            if (ganhador == false){
 
-                        jogo[y][x] = 1;
+                if(jogador == 0 & teste2 == true & ganhador == false){
 
-                    } else {
-                        System.out.println("Jogada Inválida");
-                        menu();
+                    x = Integer.parseInt(JOptionPane.showInputDialog(NomeJogador1+" Escolha a Coluna "));
+                    y = Integer.parseInt(JOptionPane.showInputDialog(NomeJogador1+" Escolha a Linha "));
+
+                    if(jogo[y][x]==' '& x<=2 & y<=2 & x>=0 & y>=0){
+                        jogo[y][x] = 'X';
+                        teste1 = true;
+                        Jogadas++;
+                        ganhador = verificacao(ganhador);
+                        jogador = 1;
+                        System.out.println("\n");
+                        escreveJogo();
+                        System.out.println("\n");
                     }
+                    else if(jogo[y][x]!=' ' || x>2 || y>2 || x<0 || y<0){
+                        JOptionPane.showMessageDialog(null,"Jogada Inválida de "+NomeJogador1);
+                        teste1 = false;
+                        Jogadas--;
+                    }
+                }
+                if (Jogadas==9){
+                    JOptionPane.showMessageDialog(null,"Empate");
+                    menu();
+                }
+                if(jogador == 1 & teste1==true & ganhador == false & Jogadas!=9){
 
-                    escreveJogo();
-                    ganhador = verificacao(ganhador);
+                    x = Integer.parseInt(JOptionPane.showInputDialog(NomeJogador2+" Escolha a Coluna "));
+                    y = Integer.parseInt(JOptionPane.showInputDialog(NomeJogador2+" Escolha a Linha "));
 
-                    if (NumJogadas==9){
-                        System.out.println("Empate");
-                        ganhador = true;
+                    if(jogo[y][x]==' ' & x<=2 & y<=2 & x>=0 & y>=0){
+                        jogo[y][x] = 'O';
+                        teste2 = true;
+                        Jogadas++;
+                        ganhador = verificacao(ganhador);
+                        jogador = 0;
+                        System.out.println("\n");
+                        escreveJogo();
+                        System.out.println("\n");
+                    }
+                    else if(jogo[y][x]!=' ' || x>2 || y>2 || x<0 || y<0){
+                        JOptionPane.showMessageDialog(null,"Jogada Inválida de "+NomeJogador2);
+                        teste2 = false;
+                        Jogadas--;
                     }
                 }
 
-                if (ganhador == false) {
-                    NumJogadas++;
-                    System.out.println("Jogador " + NomeJogador2 + " escolha sua jogada");
-                    System.out.println("Coluna: ");
-                    x = sc.nextInt();
-                    System.out.println("Linha: ");
-                    y = sc.nextInt();
+            }
 
-                    if (jogo[y][x] == 0) {
+        }
 
-                        jogo[y][x] = 2;
-
-                    } else {
-                        System.out.println("Jogada Inválida");
-                        menu();
-                    }
-
-                    escreveJogo();
-                    ganhador = verificacao(ganhador);
-
-                    if (NumJogadas==9){
-                        System.out.println("Empate");
-                        ganhador = true;
-                    }
-                }
-
-        }while(ganhador != true);
-
-            menu();
 
 
     }
     public  static void escreveJogo(){
 
-        for(int i=0;i<3;i++){
+        JOptionPane.showMessageDialog(null, jogo[0][0] +"  |  " +jogo[0][1] +"  |  " +jogo[0][2] +"\n------------\n" +jogo[1][0] +"  |  " +jogo[1][1] +"  |  " +jogo[1][2] +"\n------------\n" +jogo[2][0] +"  |  " +jogo[2][1] +"  |  " +jogo[2][2]);
 
-            for(int j=0;j<3;j++){
-
-                if(j<2) {
-                    if (jogo[i][j] == 1) {
-
-                        System.out.print(" X |");
-
-                    }
-                    else if (jogo[i][j] == 2){
-
-                        System.out.print(" O |");
-
-                    }
-                    else if(jogo[i][j] == 0){
-
-                        System.out.print(" - |");
-
-                    }
-                }
-                if(j==2){
-                    if (jogo[i][j] == 1) {
-
-                        System.out.println(" X ");
-
-                    }
-                    else if (jogo[i][j] == 2){
-
-                        System.out.println(" O ");
-
-                    }
-                    else if(jogo[i][j] == 0){
-
-                        System.out.println(" - ");
-
-                    }
-                }
-            }
-
-        }
     }
     public static boolean verificacao(boolean ganhador){
 
         // Verificação Diagonal
 
-        if(jogo[0][0]==1 && jogo[1][1]==1 && jogo[2][2]==1){
+        if(jogo[0][0]=='X' && jogo[1][1]=='X' && jogo[2][2]=='X'){
 
             ganhador = true;
             VitoriasJogador1++;
-            System.out.println(NomeJogador1+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador1+" Ganhou");
 
         }
-        if(jogo[2][0]==1 && jogo[1][1]==1 && jogo[0][2]==1){
+        if(jogo[2][0]=='X' && jogo[1][1]=='X' && jogo[0][2]=='X'){
 
             ganhador = true;
             VitoriasJogador1++;
-            System.out.println(NomeJogador1+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador1+" Ganhou");
 
         }
 
         // Verificação Coluna
 
-        if(jogo[0][0]==1 && jogo[0][1]==1 && jogo[0][2]==1){
+        if(jogo[0][0]=='X' && jogo[0][1]=='X' && jogo[0][2]=='X'){
 
             ganhador = true;
             VitoriasJogador1++;
-            System.out.println(NomeJogador1+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador1+" Ganhou");
 
         }
-        if(jogo[1][0]==1 && jogo[1][1]==1 && jogo[1][2]==1){
+        if(jogo[1][0]=='X' && jogo[1][1]=='X' && jogo[1][2]=='X'){
 
             ganhador = true;
             VitoriasJogador1++;
-            System.out.println(NomeJogador1+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador1+" Ganhou");
 
         }
-        if(jogo[2][0]==1 && jogo[2][1]==1 && jogo[2][2]==1){
+        if(jogo[2][0]=='X' && jogo[2][1]=='X' && jogo[2][2]=='X'){
 
             ganhador = true;
             VitoriasJogador1++;
-            System.out.println(NomeJogador1+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador1+" Ganhou");
 
         }
 
         // Verificação Linha
 
-        if(jogo[0][0]==1 && jogo[1][0]==1 && jogo[2][0]==1){
+        if(jogo[0][0]=='X' && jogo[1][0]=='X' && jogo[2][0]=='X'){
 
             ganhador = true;
             VitoriasJogador1++;
-            System.out.println(NomeJogador1+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador1+" Ganhou");
 
         }
-        if(jogo[0][1]==1 && jogo[1][1]==1 && jogo[2][1]==1){
+        if(jogo[0][1]=='X' && jogo[1][1]=='X' && jogo[2][1]=='X'){
 
             ganhador = true;
             VitoriasJogador1++;
-            System.out.println(NomeJogador1+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador1+" Ganhou");
 
         }
-        if(jogo[0][2]==1 && jogo[1][2]==1 && jogo[2][2]==1){
+        if(jogo[0][2]=='X' && jogo[1][2]=='X' && jogo[2][2]=='X'){
 
             ganhador = true;
             VitoriasJogador1++;
-            System.out.println(NomeJogador1+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador1+" Ganhou");
 
         }
 
         //Verificação do Jogador 2
 
-        if(jogo[0][0]==2 && jogo[1][1]==2 && jogo[2][2]==2){
+        if(jogo[0][0]=='O' && jogo[1][1]=='O' && jogo[2][2]=='O'){
 
             ganhador = true;
             VitoriasJogador2++;
-            System.out.println(NomeJogador2+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador2+" Ganhou");
 
         }
-        if(jogo[2][0]==2 && jogo[1][1]==2 && jogo[0][2]==2){
+        if(jogo[2][0]=='O' && jogo[1][1]=='O' && jogo[0][2]=='O'){
 
             ganhador = true;
             VitoriasJogador2++;
-            System.out.println(NomeJogador2+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador2+" Ganhou");
 
         }
-        if(jogo[0][0]==2 && jogo[0][1]==2 && jogo[0][2]==2){
+        if(jogo[0][0]=='O' && jogo[0][1]=='O' && jogo[0][2]=='O'){
 
             ganhador = true;
             VitoriasJogador2++;
-            System.out.println(NomeJogador2+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador2+" Ganhou");
 
         }
-        if(jogo[1][0]==2 && jogo[1][1]==2 && jogo[1][2]==2){
+        if(jogo[1][0]=='O' && jogo[1][1]=='O' && jogo[1][2]=='O'){
 
             ganhador = true;
             VitoriasJogador2++;
-            System.out.println(NomeJogador2+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador2+" Ganhou");
 
         }
-        if(jogo[2][0]==2 && jogo[2][1]==2 && jogo[2][2]==2){
+        if(jogo[2][0]=='O' && jogo[2][1]=='O' && jogo[2][2]=='O'){
 
             ganhador = true;
             VitoriasJogador2++;
-            System.out.println(NomeJogador2+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador2+" Ganhou");
 
         }
         // Verificação Linha
 
-        if(jogo[0][0]==2 && jogo[1][0]==2 && jogo[2][0]==2){
+        if(jogo[0][0]=='O' && jogo[1][0]=='O' && jogo[2][0]=='O'){
 
             ganhador = true;
             VitoriasJogador2++;
-            System.out.println(NomeJogador2+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador2+" Ganhou");
 
         }
-        if(jogo[0][1]==2 && jogo[1][1]==2 && jogo[2][1]==2){
+        if(jogo[0][1]=='O' && jogo[1][1]=='O' && jogo[2][1]=='O'){
 
             ganhador = true;
             VitoriasJogador2++;
-            System.out.println(NomeJogador2+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador2+" Ganhou");
 
         }
-        if(jogo[0][2]==2 && jogo[1][2]==2 && jogo[2][2]==2){
+        if(jogo[0][2]=='O' && jogo[1][2]=='O' && jogo[2][2]=='O'){
 
             ganhador = true;
             VitoriasJogador2++;
-            System.out.println(NomeJogador2+" Ganhou");
+            JOptionPane.showMessageDialog(null,NomeJogador2+" Ganhou");
 
         }
         return ganhador;
@@ -339,29 +302,21 @@ public class JogoDaVelha {
 
         int troca1,troca2;
 
-        System.out.println("Deseja Trocar o Jogador 1?");
-        System.out.println("1 - Sim");
-        System.out.println("2 - Não");
-
-        troca1 = sc.nextInt();
+        troca1 = Integer.parseInt(JOptionPane.showInputDialog("Deseja troca o Jogador 1?\n" +
+                "1 - Sim\n" +
+                "2 - Não\n"));
 
         if(troca1==1) {
 
-            System.out.println("Informe o nome do Jogador X: ");
-            NomeJogador1 = sc.next();
-            sc.nextLine();
+            NomeJogador1 = JOptionPane.showInputDialog("Informe o nome do Jogador X: ");
             VitoriasJogador1 = 0;
         }
-        System.out.println("Deseja Trocar o Jogador 2?");
-        System.out.println("1 - Sim");
-        System.out.println("2 - Não");
-
-        troca2 = sc.nextInt();
+        troca2 = Integer.parseInt(JOptionPane.showInputDialog("Deseja troca o Jogador 2?\n" +
+                "1 - Sim\n" +
+                "2 - Não\n"));
 
         if (troca2==1) {
-            System.out.println("Informe o nome do Jogador O: ");
-            NomeJogador2 = sc.next();
-            sc.nextLine();
+            NomeJogador2 = JOptionPane.showInputDialog("Informe o nome do Jogador O: ");
             VitoriasJogador2 = 0;
         }
     }
