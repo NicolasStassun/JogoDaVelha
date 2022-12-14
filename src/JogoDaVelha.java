@@ -15,7 +15,7 @@ public class JogoDaVelha {
 
             for (int j = 0; j < 3; j++) {
 
-                jogo[i][j] = ' ';
+                jogo[i][j] = '-';
 
             }
 
@@ -71,7 +71,7 @@ public class JogoDaVelha {
 
             for (int j = 0; j < 3; j++) {
 
-                jogo[i][j] = ' ';
+                jogo[i][j] = '-';
 
             }
 
@@ -115,7 +115,7 @@ public class JogoDaVelha {
                     x = Integer.parseInt(JOptionPane.showInputDialog(NomeJogador1+" Escolha a Coluna "));
                     y = Integer.parseInt(JOptionPane.showInputDialog(NomeJogador1+" Escolha a Linha "));
 
-                    if(jogo[y][x]==' '& x<=2 & y<=2 & x>=0 & y>=0){
+                    if(jogo[y][x]=='-'& x<=2 & y<=2 & x>=0 & y>=0){
                         jogo[y][x] = 'X';
                         teste1 = true;
                         Jogadas++;
@@ -125,7 +125,7 @@ public class JogoDaVelha {
                         escreveJogo();
                         System.out.println("\n");
                     }
-                    else if(jogo[y][x]!=' ' || x>2 || y>2 || x<0 || y<0){
+                    else if(jogo[y][x]!='-' || x>2 || y>2 || x<0 || y<0){
                         JOptionPane.showMessageDialog(null,"Jogada Inválida de "+NomeJogador1);
                         teste1 = false;
                         Jogadas--;
@@ -140,7 +140,7 @@ public class JogoDaVelha {
                     x = Integer.parseInt(JOptionPane.showInputDialog(NomeJogador2+" Escolha a Coluna "));
                     y = Integer.parseInt(JOptionPane.showInputDialog(NomeJogador2+" Escolha a Linha "));
 
-                    if(jogo[y][x]==' ' & x<=2 & y<=2 & x>=0 & y>=0){
+                    if(jogo[y][x]=='-' & x<=2 & y<=2 & x>=0 & y>=0){
                         jogo[y][x] = 'O';
                         teste2 = true;
                         Jogadas++;
@@ -150,7 +150,7 @@ public class JogoDaVelha {
                         escreveJogo();
                         System.out.println("\n");
                     }
-                    else if(jogo[y][x]!=' ' || x>2 || y>2 || x<0 || y<0){
+                    else if(jogo[y][x]!='-' || x>2 || y>2 || x<0 || y<0){
                         JOptionPane.showMessageDialog(null,"Jogada Inválida de "+NomeJogador2);
                         teste2 = false;
                         Jogadas--;
